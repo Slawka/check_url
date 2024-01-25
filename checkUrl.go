@@ -14,12 +14,12 @@ import (
 )
 
 type Configtmp struct {
-		Url string
-		Searchtext string
-		Error int
-		Wait int
-		Command string
-		Log_File string
+	Url        string
+	Searchtext string
+	Error      int
+	Wait       int
+	Command    string
+	Log_File   string
 }
 
 func main() {
@@ -77,7 +77,7 @@ $ checkUrl FileConfig.conf
 			// cmd.Run()
 			break
 		}
-		if !check(conf.Searchtext) {
+		if !check(conf.Url, conf.Searchtext) {
 			end = "FALSE"
 			n++
 			// fmt.Println(check())
@@ -90,8 +90,8 @@ $ checkUrl FileConfig.conf
 	log.Println("END Cycle Check Site:" + end)
 }
 
-func check(search string) bool {
-	r, err := http.Get(search)
+func check(url string, search string) bool {
+	r, err := http.Get(url)
 	// r, err := http.Get("https://volveter.ru/error.html")
 	if err != nil {
 		panic(err)
@@ -101,5 +101,5 @@ func check(search string) bool {
 		panic(err)
 	}
 	// log.Println(string(b[:100]))
-	return strings.Contains(string(b), "Группа компаний «Вольный Ветер»")
+	return strings.Contains(string(b), search)
 }
