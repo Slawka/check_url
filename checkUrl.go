@@ -53,9 +53,6 @@ $ checkUrl FileConfig.conf
 		os.Exit(1)
 	}
 
-	fmt.Println("Out:"+conf.Url)
-	os.Exit(0)
-
 	LOG_FILE := conf.Log_File
 	// open log file
 	logFile, err := os.OpenFile(LOG_FILE, os.O_APPEND|os.O_RDWR|os.O_CREATE, 0644)
