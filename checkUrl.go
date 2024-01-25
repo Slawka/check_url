@@ -17,7 +17,7 @@ type Configtmp struct {
 	Url        string
 	Searchtext string
 	Error      int
-	Wait       int
+	Wait       int32
 	Command    string
 	Log_File   string
 }
@@ -67,7 +67,7 @@ $ checkUrl FileConfig.conf
 	end := ""
 	n := 0
 	for true {
-		time.Sleep(time.Duration(conf.Wait))
+		time.Sleep(time.Duration(conf.Wait) * time.Second)
 		if n >= conf.Error {
 			log.Println("n>=3")
 			// cmd := exec.Command("/usr/bin/systemctl", "restart", "httpd")
