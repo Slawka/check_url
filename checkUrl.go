@@ -94,7 +94,9 @@ func check(url string, search string) bool {
 	r, err := http.Get(url)
 	// r, err := http.Get("https://volveter.ru/error.html")
 	if err != nil {
-		panic(err)
+		// panic(err)
+		log.Println(err)
+		return false
 	}
 	b, err := io.ReadAll(r.Body)
 	if err != nil {
