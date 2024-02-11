@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"log"
@@ -71,8 +72,14 @@ $ checkUrl FileConfig.conf
 		if n >= conf.Error {
 			log.Println("n>=3")
 			// cmd := exec.Command("/usr/bin/systemctl", "restart", "httpd")
-			cmd := exec.Command(strings.Split(conf.Command," ")[0],strings.Join(strings.Split(conf.Command," ")[1:]," "))
+			cmd := exec.Command(strings.Split(conf.Command, " ")[0], strings.Join(strings.Split(conf.Command, " ")[1:], " "))
+
+			var outb, errb bytes.Buffer
+			cmd.Stdout = &outb
+			cmd.Stderr = &errb
+
 			cmd.Run()
+			log.Println("out:", outb.String(), "err:", errb.String())
 			// cmd := exec.Command("/usr/bin/echo", "`/usr/bin/date +\"%Y/%M/%d %H:%m:%S\"`\" Http reboot \"", ">>","/var/log/httpd/restart-nginx.log")
 			// cmd.Run()
 			break
