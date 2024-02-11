@@ -71,7 +71,7 @@ $ checkUrl FileConfig.conf
 		if n >= conf.Error {
 			log.Println("n>=3")
 			// cmd := exec.Command("/usr/bin/systemctl", "restart", "httpd")
-			cmd := exec.Command(conf.Command)
+			cmd := exec.Command(strings.Split(conf.Command," ")[0],strings.Join(strings.Split(conf.Command," ")[1:]," "))
 			cmd.Run()
 			// cmd := exec.Command("/usr/bin/echo", "`/usr/bin/date +\"%Y/%M/%d %H:%m:%S\"`\" Http reboot \"", ">>","/var/log/httpd/restart-nginx.log")
 			// cmd.Run()
