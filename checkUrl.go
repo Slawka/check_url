@@ -79,16 +79,16 @@ $ checkUrl FileConfig.conf
 			appArgs := []string{strings.Join(strings.Split(conf.Command, " ")[1:], " ")}
 
 			cmd := exec.Command(app, appArgs...)
-			cmd.Run()
+			err := cmd.Run()
 
 			// err := cmd.Start()
 			// var outb, errb bytes.Buffer
 			// cmd.Stdout = &outb
 			// cmd.Stderr = &errb
 
-			// if err != nil {
-			// 	log.Println("Error Cmd: ", err.Error())
-			// }
+			if err != nil {
+				log.Println("Error Cmd: ", err.Error())
+			}
 
 			// log.Println("Out Cmd: ", string(out))
 
