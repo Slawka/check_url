@@ -73,7 +73,8 @@ $ checkUrl FileConfig.conf
 			// cmd := exec.Command("/usr/bin/systemctl", "restart", "httpd")
 			// cmd := exec.Command(strings.Split(conf.Command, " ")[0], strings.Join(strings.Split(conf.Command, " ")[1:], " "))
 			// cmd := exec.Command("/usr/bin/systemctl", "restart nginx")
-			out, err := exec.Command("/usr/bin/cat", "/var/log/messages").Output()
+			// out, err := exec.Command("/usr/bin/cat", "/var/log/messages").Output()
+			out, err := exec.Command("/usr/bin/systemctl", "restart nginx").Output()
 			// err := cmd.Start()
 			// var outb, errb bytes.Buffer
 			// cmd.Stdout = &outb
