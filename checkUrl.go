@@ -73,8 +73,8 @@ $ checkUrl FileConfig.conf
 			// cmd := exec.Command("/usr/bin/systemctl", "restart", "httpd")
 			// cmd := exec.Command(strings.Split(conf.Command, " ")[0], strings.Join(strings.Split(conf.Command, " ")[1:], " "))
 			// cmd := exec.Command("/usr/bin/systemctl", "restart nginx")
-			cmd := exec.Command("/usr/bin/cat", "/var/log/messages")
-			err := cmd.Start()
+			out, err := exec.Command("/usr/bin/cat", "/var/log/messages").Output()
+			// err := cmd.Start()
 			// var outb, errb bytes.Buffer
 			// cmd.Stdout = &outb
 			// cmd.Stderr = &errb
@@ -82,10 +82,9 @@ $ checkUrl FileConfig.conf
 			if err != nil {
 				log.Println("Error Cmd: ", err)
 			}
-			log.Printf("Waiting for command to finish...")
-			err = cmd.Wait()
-			log.Printf("Command finished with error: %v", err)
-		
+
+			log.Println("Out Cmd: ", string(out[:]))
+
 			log.Println(strings.Split(conf.Command, " ")[0], strings.Join(strings.Split(conf.Command, " ")[1:], " "))
 
 			// log.Println("out:", outb.String(), "err:", errb.String())
