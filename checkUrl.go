@@ -90,7 +90,7 @@ $ checkUrl FileConfig.conf
 
 			log.Println("Out Cmd: ", string(out[:]))
 
-			log.Println(strings.Split(conf.Command, " ")[0], strings.Join(strings.Split(conf.Command, " ")[1:], " "))
+			log.Println(app, appArgs)
 
 			// log.Println("out:", outb.String(), "err:", errb.String())
 			// log.Println("out:", cmd.Stdout, "err:", err)
