@@ -85,10 +85,10 @@ $ checkUrl FileConfig.conf
 			// cmd.Stderr = &errb
 
 			if err != nil {
-				log.Println("Error Cmd: ", err)
+				log.Println("Error Cmd: ", err.Error())
 			}
 
-			log.Println("Out Cmd: ", string(out[:]))
+			log.Println("Out Cmd: ", string(out))
 
 			log.Println(app, appArgs)
 
