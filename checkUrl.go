@@ -82,7 +82,10 @@ $ checkUrl FileConfig.conf
 			if err != nil {
 				log.Println("Error Cmd: ", err)
 			}
-
+			log.Printf("Waiting for command to finish...")
+			err = cmd.Wait()
+			log.Printf("Command finished with error: %v", err)
+		
 			log.Println(strings.Split(conf.Command, " ")[0], strings.Join(strings.Split(conf.Command, " ")[1:], " "))
 
 			// log.Println("out:", outb.String(), "err:", errb.String())
