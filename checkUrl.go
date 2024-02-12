@@ -85,7 +85,7 @@ $ checkUrl FileConfig.conf
 			log.Println(strings.Split(conf.Command, " ")[0], strings.Join(strings.Split(conf.Command, " ")[1:], " "))
 
 			// log.Println("out:", outb.String(), "err:", errb.String())
-			// log.Println("out:", out, "err:", err)
+			log.Println("out:", cmd.Stdout, "err:", err)
 			// cmd := exec.Command("/usr/bin/echo", "`/usr/bin/date +\"%Y/%M/%d %H:%m:%S\"`\" Http reboot \"", ">>","/var/log/httpd/restart-nginx.log")
 			// cmd.Run()
 			break
