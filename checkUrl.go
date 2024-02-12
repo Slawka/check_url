@@ -79,7 +79,7 @@ $ checkUrl FileConfig.conf
 			// cmd.Stderr = &errb
 
 			if err != nil {
-				log.Println(err)
+				log.Println("Error Cmd: ", err)
 			}
 
 			log.Println(strings.Split(conf.Command, " ")[0], strings.Join(strings.Split(conf.Command, " ")[1:], " "))
