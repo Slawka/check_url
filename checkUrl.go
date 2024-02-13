@@ -76,7 +76,7 @@ $ checkUrl FileConfig.conf
 			// cmd := exec.Command("/usr/bin/systemctl", "restart nginx")
 			// out, err := exec.Command("/usr/bin/cat", "/var/log/messages").Output()
 			app := strings.Split(conf.Command, " ")[0]
-			appArgs := []string{strings.Join(strings.Split(conf.Command, " ")[1:], " ")}
+			appArgs := strings.Split(conf.Command, " ")[1:]
 
 			cmd := exec.Command(app, appArgs...)
 			err := cmd.Run()
