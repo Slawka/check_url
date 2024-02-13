@@ -16,6 +16,7 @@ import (
 type Configtmp struct {
 	Url        string
 	Searchtext string
+	TechBreak  string
 	Error      int
 	Wait       int32
 	Command    string
@@ -24,17 +25,17 @@ type Configtmp struct {
 
 func main() {
 
-	// defConfigFile := "./checkUrl_config.conf"
 	ConfigFile := ""
 
 	if len(os.Args) > 1 {
 		ConfigFile = os.Args[1]
 	} else {
 		fmt.Println(`
-		Create a config file and add as argument
+Create a config file and add as argument
 
 Url = "http://example.com"
 SearchText = "Site Ok"
+TechBreak = "Проводятся технические работы"
 Error = 3
 WaitReplay = 5
 Command = "systemctl restart httpd"
@@ -66,40 +67,34 @@ $ checkUrl FileConfig.conf
 
 	end := ""
 	n := 0
+
 	for true {
+		
 		time.Sleep(time.Duration(conf.Wait) * time.Second)
+		
+		if check(conf.Url, conf.TechBreak) {
+			log.Println("TechBreak")
+			break
+		}
+
 		if n >= conf.Error {
-			log.Println("n>=3")
-			// cmd := exec.Command("/usr/bin/systemctl", "restart", "httpd")
-			// cmd := exec.Command(strings.Split(conf.Command, " ")[0], strings.Join(strings.Split(conf.Command, " ")[1:], " "))
-			// out, err := exec.Command(strings.Split(conf.Command, " ")[0], strings.Join(strings.Split(conf.Command, " ")[1:], " ")).Output()
-			// cmd := exec.Command("/usr/bin/systemctl", "restart nginx")
-			// out, err := exec.Command("/usr/bin/cat", "/var/log/messages").Output()
+			log.Println("Error >=3")
+
 			app := strings.Split(conf.Command, " ")[0]
 			appArgs := strings.Split(conf.Command, " ")[1:]
 
 			cmd := exec.Command(app, appArgs...)
 			err := cmd.Run()
 
-			// err := cmd.Start()
-			// var outb, errb bytes.Buffer
-			// cmd.Stdout = &outb
-			// cmd.Stderr = &errb
-
 			if err != nil {
 				log.Println("Error Cmd: ", err.Error())
 			}
 
-			// log.Println("Out Cmd: ", string(out))
-
 			log.Println(app, appArgs)
 
-			// log.Println("out:", outb.String(), "err:", errb.String())
-			// log.Println("out:", cmd.Stdout, "err:", err)
-			// cmd := exec.Command("/usr/bin/echo", "`/usr/bin/date +\"%Y/%M/%d %H:%m:%S\"`\" Http reboot \"", ">>","/var/log/httpd/restart-nginx.log")
-			// cmd.Run()
 			break
 		}
+
 		if !check(conf.Url, conf.Searchtext) {
 			end = "FALSE"
 			n++
@@ -115,16 +110,18 @@ $ checkUrl FileConfig.conf
 
 func check(url string, search string) bool {
 	r, err := http.Get(url)
-	// r, err := http.Get("https://volveter.ru/error.html")
+
 	if err != nil {
 		// panic(err)
 		log.Println(err)
 		return false
 	}
+
 	b, err := io.ReadAll(r.Body)
+
 	if err != nil {
 		panic(err)
 	}
-	// log.Println(string(b[:100]))
+
 	return strings.Contains(string(b), search)
 }
